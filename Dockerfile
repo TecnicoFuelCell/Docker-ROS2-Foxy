@@ -1,7 +1,7 @@
 FROM osrf/ros:foxy-desktop
 
 RUN apt-get update && apt-get install -y \
-    git python3-pip tmux nano python3-colcon-common-extensions \
+    git python3-pip tmux nano python3-colcon-common-extensions x11-apps\
     build-essential
     
 RUN pip install opencv-python
