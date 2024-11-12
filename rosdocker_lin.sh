@@ -8,7 +8,7 @@ read -p "Enter the name you want to give to the Docker container: " container_na
 scriptPath="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 # Create the directory structure in the same directory as the Dockerfile
-directory="$scriptPath/share/catkin_ws/src"
+directory="$scriptPath/share/ros2_ws/src"
 if [ ! -d "$directory" ]; then
     mkdir -p "$directory"
     echo "Created directory: $directory"
@@ -26,7 +26,14 @@ if [ $? -eq 0 ]; then
 
     # Run the Docker container with the specified names
     echo "Running the Docker container '$container_name'..."
-    docker run --name "$container_name" -e DISPLAY=host.docker.internal:0.0 -it -v "$scriptPath/share:/opt/share" "$image_name"
+    
+    docker run --name "$container_name" \
+    --privileged \
+    --device=/dev/video0:/dev/video0 \
+    -it -v "$scriptPath/share:/opt/share" \
+    "$image_name"
+
+
 
     # Check if the Docker container ran successfully
     if [ $? -eq 0 ]; then
