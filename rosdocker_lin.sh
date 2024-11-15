@@ -20,6 +20,24 @@ fi
 echo "Building the Docker image '$image_name'..."
 docker build -t "$image_name" .
 
+
+# # List available video devices
+# echo "Available video devices:"
+# for device in /dev/video*; do
+#     echo "$device"
+# done
+
+# # Prompt user to select a video device
+# read -p "Enter the video device to map (e.g., /dev/video0): " video_device
+
+# # Validate the selected device
+# if [ -e "$video_device" ]; then
+#     echo "Using video device: $video_device"
+# else
+#     echo "Invalid video device. Please check and rerun the script."
+#     exit 1
+# fi
+
 # Check if the Docker image was built successfully
 if [ $? -eq 0 ]; then
     echo "Docker image '$image_name' built successfully."
@@ -27,9 +45,12 @@ if [ $? -eq 0 ]; then
     # Run the Docker container with the specified names
     echo "Running the Docker container '$container_name'..."
     
+    # --gpus all \
+    # --runtime nvidia\
+
     docker run --name "$container_name" \
     --privileged \
-    --device=/dev/video0:/dev/video0 \
+    -v /dev:/dev\
     -it -v "$scriptPath/share:/opt/share" \
     --env="DISPLAY" \
     --env="QT_X11_NO_MITSHM=1" \
