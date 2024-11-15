@@ -3,7 +3,7 @@ FROM osrf/ros:humble-desktop
 RUN apt-get update && apt-get install -y \
     git python3-pip tmux nano python3-colcon-common-extensions x11-apps\
     build-essential
-RUN pip install opencv-python pygame ultralytics
+RUN pip install opencv-python pygame ultralytics pyserial
 
 # Source ROS 2 and the workspace environment on container startup
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
