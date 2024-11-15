@@ -5,7 +5,13 @@ Simple Dockerfile to run ROS2 Foxy. This can/will be updated according to new ne
 ## Pre-requisites
 * [Install Docker Setup](https://www.docker.com/products/docker-desktop/) -> just press next and install on the Docker installation
 * [If you are using Windows, install WSL2](https://learn.microsoft.com/uk-ua/windows/wsl/install) 
-* [Install xLaunch (VcXsrv) for GUI interface availability](https://sourceforge.net/projects/vcxsrv/)
+* For windows, [install xLaunch (VcXsrv) for GUI interface availability](https://sourceforge.net/projects/vcxsrv/)
+* For linux, run the following lines:
+```
+sudo apt update
+sudo apt install x11-xserver-utils
+xhost +local:docker
+```
 
 ## Script Procedure
 * If you are using Windows, run the win script
