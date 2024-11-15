@@ -1,10 +1,10 @@
-FROM osrf/ros:foxy-desktop
+FROM osrf/ros:humble-desktop
 
-RUN apt-get update && apt-get install -y \
-    git python3-pip tmux nano python3-colcon-common-extensions x11-apps\
-    build-essential
+# RUN apt-get update && apt-get install -y \
+#     git python3-pip tmux nano python3-colcon-common-extensions x11-apps\
+#     build-essential
     
-RUN pip install opencv-python
+# RUN pip install opencv-python pygame ultralytics
 
 # Source ROS 2 and the workspace environment on container startup
 RUN echo "source /opt/ros/foxy/setup.bash" >> ~/.bashrc
