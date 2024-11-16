@@ -12,6 +12,9 @@ RUN pip install opencv-python pygame ultralytics pyserial
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 RUN echo "source /opt/share/ros2_ws/install/setup.bash" >> ~/.bashrc
 
+# Set the working directory to the workspace
+WORKDIR /opt/share/ros2_ws
+
 RUN rm -rf var/lib/apt/lists/*
 
 RUN echo "All done!"
