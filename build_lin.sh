@@ -18,9 +18,6 @@ if [ $? -eq 0 ]; then
 
     # Run the Docker container with the specified names
     echo "Running the Docker container '$container_name'..."
-    
-    # --gpus all \
-    # --runtime nvidia\
 
     docker run --name "$container_name" \
     --privileged \

@@ -1,11 +1,15 @@
-# Docker ROS2 Foxy
+# Docker ROS2 Humble
 
-Simple Dockerfile to run ROS2 Foxy. This can/will be updated according to new needs of the TFC team.
+Dockerfile to run ROS2 Humble with CUDA capabilities for computer vision. This can/will be updated according to new needs of the TFC team. At the moment it is able to run YOLO with a ZED camera. 
+We recommend the use of a docker extension, such as the one on VSCode, for further container handling.
+
+*Warning: The latest upload (2024/11/17) does not have testing for Windows yet*
 
 ## Pre-requisites
 * [Install Docker Setup](https://www.docker.com/products/docker-desktop/) -> just press next and install on the Docker installation
 * [If you are using Windows, install WSL2](https://learn.microsoft.com/uk-ua/windows/wsl/install) 
 * For windows, [install xLaunch (VcXsrv) for GUI interface availability](https://sourceforge.net/projects/vcxsrv/)
+* CUDA Toolkit version [12.1](https://developer.nvidia.com/cuda-12-1-0-download-archive) or [12.4](https://developer.nvidia.com/cuda-12-4-0-download-archive) (12.4 is recommended)
 * For linux, run the following lines:
 ```
 sudo apt update
@@ -27,17 +31,12 @@ docker build -t <name_you_want_to_give_to_the_image> .
 * Create on the same directory as the Dockerfile a directory /share/catkin_ws/src
 * Create the container as follows:
 
-### If you are using Windows:
+### If you are using Windows (to be tested, so, not yet updated):
 ```
 docker run --name <name_you_want_to_give_to_the_container> -e DISPLAY=host.docker.internal:0.0 -it -v ${PWD}/share:/opt/share <name_of_your_image>
 ```
 
 ### If you are using Linux:
 ```
-docker run --name <name_you_want_to_give_to_the_container> -e DISPLAY=host.docker.internal:0.0 -it -v $PWD/share:/opt/share <name_of_your_image>
+docker run --name <name_you_want_to_give_to_the_container> --privileged --gpus all -v /dev:/dev -it -v "<your_ros2_ws_path>:/opt/share/ros2_ws" -env="DISPLAY" --env="QT_X11_NO_MITSHM=1" --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" <name_of_your_image>
 ```
-
-## Additional information
-For usefull info about docker commands, [check this](https://github.com/noshluk2/ros1_wiki/blob/main/docker/commands.md).
-
-For a video tutorial of the basics, [check this video](https://www.youtube.com/watch?v=qWuudNxFGOQ&t=365s).

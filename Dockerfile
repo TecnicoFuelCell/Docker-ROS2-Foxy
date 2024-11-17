@@ -8,6 +8,19 @@ RUN pip uninstall numpy==1.26.4
 RUN pip install numpy==1.26.4
 RUN pip install opencv-python pygame ultralytics pyserial
 
+# Clone and build ZED Open Capture
+WORKDIR /opt/share
+
+RUN git clone https://github.com/stereolabs/zed-open-capture.git && \
+    apt-get install -y libhidapi-dev libusb-1.0-0-dev libhidapi-libusb0 libhidapi-dev libopencv-dev libopencv-viz-dev && \
+    cd zed-open-capture/udev && \
+    cd .. && mkdir build && cd build && \
+    cmake .. && \
+    make -j$(nproc) && \
+    make install && \
+    ldconfig
+
+
 # Source ROS 2 and the workspace environment on container startup
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 RUN echo "source /opt/share/ros2_ws/install/setup.bash" >> ~/.bashrc
